@@ -25,7 +25,7 @@ print("Dataset Loaded Successfully!\n")
 # Calculate percentage of missing values Combine both into a single DataFrame 
 # Sort descending by percentage
 
-'''# MATCHES DATASET
+# MATCHES DATASET
 nan_value_matches = matches.isnull().sum()  # Missing count
 nan_percentage_matches = (nan_value_matches / len(matches)) * 100  # Missing percentage
 missing_matches = pd.DataFrame({  # Combine into DataFrame
@@ -49,26 +49,26 @@ missing_deliveries = pd.DataFrame({
 })
 # Sort
 missing_deliveries = missing_deliveries.sort_values(by='missing_percentage', ascending=False)
-print("\nDeliveries Missing Value Audit:\n", missing_deliveries)'''
+print("\nDeliveries Missing Value Audit:\n", missing_deliveries)
 
 
 # Q2: Drop Irrelevant Columns
 # From matches:
 # Drop all umpire-related columns dynamically 
 # Print remaining column count
-'''umpire_cols = []
+umpire_cols = []
 for col in matches.columns:
     if "umpire" in col.lower():
         umpire_cols.append(col)
 matches = matches.drop(columns = umpire_cols)
-print("Remaining columns:", matches.shape[1])'''
+print("Remaining columns:", matches.shape[1])
 
 
 # Q3: Standardize Team Names 
 # Clean inconsistent team names
 # Replace old names with new ones
 # Get all unique team names
-'''for col in ['team1', 'team2', 'winner', 'toss_winner']:
+for col in ['team1', 'team2', 'winner', 'toss_winner']:
     print(f"\n{col} unique values:\n", matches[col].unique())
 
 team_name_map = {
@@ -97,7 +97,7 @@ matches[['team1', 'team2', 'winner', 'toss_winner']] = \
 # Print unique team names after changes
 print("\nAfter standardizing:\n")
 for col in ['team1', 'team2', 'winner', 'toss_winner']:
-    print(f"\n{col} unique values:\n", matches[col].unique())'''
+    print(f"\n{col} unique values:\n", matches[col].unique())
 
 
 # Q4: Handle Missing Values Smartly
@@ -114,39 +114,64 @@ print(matches.isna().sum())
 # Check duplicates in both datasets
 # Remove them if present
 # Print number of duplicates removed
+matches_duplicates = matches.duplicated().sum()
+deliveries_duplicates = deliveries.duplicated().sum()
+
+matches = matches.drop_duplicates()
+deliveries = deliveries.drop_duplicates()
+
+print("Duplicates removed from matches:", matches_duplicates)
+print("Duplicates removed from deliveries:", deliveries_duplicates)
 
 
 
 # Q6: Data Type Optimization
-# Convert columns to proper types:
-# For matches:
-# season → int
-# date → datetime
-# For deliveries:
-# Ensure all numeric columns are correct dtype
-# 👉 Bonus:
-# Use astype() and pd.to_datetime()
+# Convert season to integer (extract year if needed)
+matches["season"] = matches["season"].astype(str).str.extract(r'(\d{4})')[0].astype(int)
+
+# Convert date to datetime format
+matches["date"] = pd.to_datetime(matches["date"])
+
+
+# Convert numeric columns in deliveries dataset
+numeric_cols = [
+    "match_id", "inning", "over", "ball",
+    "batsman_runs", "extra_runs", "total_runs", "is_wicket"
+]
+
+for col in numeric_cols:
+    deliveries[col] = pd.to_numeric(deliveries[col], errors="coerce")
+
+
+# Q7: Outlier Detection
+# Matches where result_margin < 0
+print("Negative result_margin:\n", matches[matches["result_margin"] < 0])
+
+# Matches where result_margin > 10 (wickets case)
+print("\nWickets > 10:\n", matches[matches["result_margin"] > 10])
 
 
 
-# Q7: Outlier Detection (Logical Cleaning)
-# Find:
-# Matches where win_by_runs < 0
-# Matches where win_by_wickets > 10
-# 👉 Print such rows (if any)
+# Q8: Create match_result_type column
+
+matches["match_result_type"] = "No Result"
+
+# If win by runs
+matches.loc[matches["result"] == "runs", "match_result_type"] = "Runs"
+
+# If win by wickets
+matches.loc[matches["result"] == "wickets", "match_result_type"] = "Wickets"
 
 
 
-# Q8: Create New Clean Columns
-# Add:
-# match_result_type:
-# "Runs" if win_by_runs > 0
-# "Wickets" if win_by_wickets > 0
-# "No Result" otherwise
+# Q9: Check invalid winners
 
+invalid_rows = matches[
+    (
+        (matches["winner"] == matches["team1"]) |
+        (matches["winner"] == matches["team2"]) |
+        (matches["winner"] == "No Result")
+    )
+]
 
-
-# Q9: Consistency Check (Advanced Thinking)
-# Ensure:
-# winner must be either team1 or team2 or "No Result"
-# 👉 Find invalid rows (if any)
+print("Invalid rows:\n", invalid_rows)
