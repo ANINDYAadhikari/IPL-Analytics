@@ -158,3 +158,11 @@ valid_winners = matches[
     (matches["winner"] == "No Result")
 ]
 print(f"\nTotal valid winner rows: {len(valid_winners)} / {len(matches)}")
+
+
+
+# Save cleaned versions to data folder
+matches.to_csv(r'C:\Users\anind\OneDrive\Desktop\PythonVSC\Project\IPL-Analytics\Data\matches_clean.csv', index=False)
+deliveries.to_csv(r'C:\Users\anind\OneDrive\Desktop\PythonVSC\Project\IPL-Analytics\Data\deliveries_clean.csv', index=False)
+
+print("Cleaned files saved.")
