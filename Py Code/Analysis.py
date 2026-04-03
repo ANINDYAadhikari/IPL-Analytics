@@ -27,6 +27,15 @@ print("Dataset Loaded Successfully!\n")
 top_runs = deliveries.groupby('batter')['batsman_runs'].sum().sort_values(ascending=False)
 print("Top 10 Run Scorers in IPL:\n", top_runs.head(10))
 
+# Plot a bar chart of top 10 batsmen by total runs
+# Question: Who are the highest run scorers in IPL history?  ANS = Virat Kohli 
+plt.figure()
+top_runs.head(10).plot(kind='bar', color='skyblue')
+plt.title("Top 10 Run Scorers in IPL")
+plt.xlabel("Batsman")
+plt.ylabel("Total Runs")
+plt.show()
+
 
 
 # Q2: Strike Rate Leaders
@@ -42,6 +51,15 @@ sr_df['strike_rate'] = (sr_df['runs'] / sr_df['balls']) * 100  # Formula: (runs 
 top_sr = sr_df.sort_values(by='strike_rate', ascending=False).head(10)
 print("Top 10 Strike Rate Leaders (min 200 balls):\n", top_sr)
 
+# Plot a bar chart of top 10 batsmen by strike rate
+# Question: Which players score runs the fastest?  ANS = PD Salt
+plt.figure()
+top_sr['strike_rate'].plot(kind='bar', color='skyblue')
+plt.title("Top 10 Strike Rate Leaders (min 200 balls)")
+plt.xlabel("Batsman")
+plt.ylabel("Strike Rate")
+plt.show()
+
 
 
 # Q3: Boundary Hitters
@@ -55,6 +73,18 @@ boundary_df['total_boundaries'] = boundary_df['fours'] + boundary_df['sixes']
 
 top_boundaries = boundary_df.sort_values(by='total_boundaries', ascending=False)
 print("Top 10 Boundary Hitters:\n", top_boundaries.head(10))
+
+# Plot a grouped bar chart
+# Question: Who hits more boundaries and what type (4s vs 6s)?  ANS = Virat Kohli Scored more Sixes than anyone else and Sikhar Dhawan scored more Fours than anyone else
+top10 = top_boundaries.head(10)[['fours', 'sixes']]
+plt.figure(figsize=(8,5))
+top10.plot(kind='bar')
+plt.title("Top 10 Boundary Hitters (Fours vs Sixes)")
+plt.xlabel("Batsman")
+plt.ylabel("Count")
+plt.tight_layout()
+plt.show()
+
 
 
 
@@ -73,6 +103,17 @@ consistency_df = consistency_df.sort_values(by='runs', ascending=False)
 print("Most Consistent Players (runs > 2000 & SR > 120):\n", consistency_df.head(10))
 
 
+# Plot a scatter plot
+# Question: Which players balance high runs and high strike rate?  ANS = Virat Kohli 
+plt.figure(figsize=(8,5))
+plt.scatter(consistency_df['strike_rate'], consistency_df['runs'])
+plt.title("Most Consistent Players (Runs vs Strike Rate)")
+plt.xlabel("Strike Rate")
+plt.ylabel("Total Runs")
+plt.show()
+
+
+
 
 # ================================
 # SECTION 2: BOWLING ANALYSIS
@@ -84,6 +125,16 @@ print("Most Consistent Players (runs > 2000 & SR > 120):\n", consistency_df.head
 wickets = deliveries[deliveries['dismissal_kind'].notna()]  # Keep only dismissal rows
 top_wickets = wickets.groupby('bowler')['ball'].count().sort_values(ascending=False)
 print("Top 10 Wicket Takers:\n", top_wickets.head(10))
+
+# Plot a bar chart of top 10 wicket takers
+# Question: Who are the most successful bowlers in IPL history?   ANS =   YS Chahal 
+plt.figure(figsize=(8,5))
+top_wickets.head(10).plot(kind='bar', color='skyblue')
+plt.title("Top 10 Wicket Takers in IPL")
+plt.xlabel("Bowler")
+plt.ylabel("Wickets")
+plt.tight_layout()
+plt.show()
 
 
 
@@ -99,6 +150,16 @@ eco_df['economy'] = (eco_df['runs'] / eco_df['balls']) * 6         # Formula: (r
 
 best_eco = eco_df.sort_values(by='economy')                         # Lower economy = better
 print("Best Economy Bowlers (min 200 balls):\n", best_eco.head(10))
+
+# Plot a bar chart of best economy bowlers
+# Question: Which bowlers are the most economical?   ANS = Sohail Tanvir  
+plt.figure(figsize=(8,5))
+best_eco.head(10)['economy'].plot(kind='bar', color='skyblue')
+plt.title("Top 10 Most Economical Bowlers")
+plt.xlabel("Bowler")
+plt.ylabel("Economy Rate")
+plt.tight_layout()
+plt.show()
 
 
 
@@ -116,6 +177,19 @@ best_bowling_sr = bowling_sr_df.sort_values(by='bowling_strike_rate')  # Lower =
 print("Best Strike Bowlers:\n", best_bowling_sr.head(10))
 
 
+# Plot a scatter plot
+# Question: Which bowlers are both economical and take wickets quickly?  ANS = AC Gilchrist  
+
+# Merge with strike rate data
+final_df = bowling_sr_df.merge(eco_df[['economy']], left_index=True, right_index=True)
+plt.figure()
+plt.scatter(final_df['economy'], final_df['bowling_strike_rate'])
+plt.title("Bowler Analysis (Economy vs Strike Rate)")
+plt.xlabel("Economy Rate")
+plt.ylabel("Bowling Strike Rate")
+plt.show()
+
+
 
 # ================================
 # SECTION 3: TEAM ANALYSIS
@@ -126,6 +200,16 @@ print("Best Strike Bowlers:\n", best_bowling_sr.head(10))
 
 most_wins = matches['winner'].value_counts()
 print("Most Successful Teams (Total Wins):\n", most_wins)
+
+# Plot a horizontal bar chart of total wins
+# Question: Which teams have dominated IPL historically?   ANS = Mumbai Indians
+plt.figure(figsize=(8,5))
+most_wins.plot(kind='barh', color='skyblue')
+plt.title("Total Wins by Teams in IPL")
+plt.xlabel("Wins")
+plt.ylabel("Team")
+plt.tight_layout()
+plt.show()
 
 
 
@@ -138,6 +222,15 @@ toss_win_pct = (toss_win.sum() / len(toss_win)) * 100
 print("Toss Impact Analysis:")
 print(f"Toss winner also won the match:, {toss_win_pct:.2f}%")
 
+# Plot a pie chart: Toss winner won vs lost
+# Question: Does winning the toss significantly affect match results?    ANS = Yes, winning the toss significantly affect match results 
+plt.figure()
+toss_counts = toss_win.value_counts()
+toss_counts.plot(kind='pie', autopct='%1.1f%%')
+plt.title("Toss Impact on Match Result")
+plt.ylabel("")  # remove default label
+plt.show()
+
 
 
 # Q10: Win Type Analysis
@@ -145,3 +238,11 @@ print(f"Toss winner also won the match:, {toss_win_pct:.2f}%")
 
 win_type = matches['match_result_type'].value_counts()
 print("Match Win Type Distribution:\n", win_type)
+
+# Plot: Pie chart of win types
+# Question: Are matches usually won by chasing or defending?   ANS = Chasing
+plt.figure()
+win_type.plot(kind='pie', autopct='%1.1f%%')
+plt.title("Win Type Distribution (Runs vs Wickets)")
+plt.ylabel("")  # remove default label
+plt.show()
