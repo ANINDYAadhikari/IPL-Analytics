@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sqlalchemy import create_engine
 
 plt.style.use('seaborn-v0_8')
 
@@ -261,45 +262,3 @@ plt.title("Win Type Distribution (Runs vs Wickets)")
 plt.ylabel("")
 plt.tight_layout()
 plt.show()
-
-
-
-
-
-# Q1: Top Run Scorers
-
-
-
-# Q2: Strike Rate Leaders
-
-
-
-# Q3: Boundary Hitters
-
-
-
-# Q4: Most Consistent Players
-
-
-
-# Q5: Top Wicket Takers
-
-
-
-# Q6: Best Economy Bowlers
-
-
-
-# Q7: Strike Bowlers
-
-
-
-# Q8: Most Successful Teams
-
-
-
-# Q9: Toss Impact Analysis
-
-
-
-# Q10: Win Type Analysis
