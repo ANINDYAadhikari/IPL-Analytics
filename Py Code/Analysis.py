@@ -1,8 +1,8 @@
 # =========================
 # IPL DATA ANALYSIS PROJECT
-# -------------------------
+# --------------------------
 # Author -- Anindya Adhikari
-# =========================
+# ==========================
 
 import pandas as pd
 import numpy as np

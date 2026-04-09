@@ -1,6 +1,6 @@
-# =========================
-# IPL DATA → MySQL PIPELINE
-# =========================
+# ===================================
+# IPL ANALYTICS DATA → MySQL PIPELINE
+# ===================================
 
 
 import pandas as pd
