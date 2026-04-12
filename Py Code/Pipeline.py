@@ -53,7 +53,6 @@ print("Connected to MySQL")
 
 # STEP 4: PUSH DATA TO MYSQL
 
-
 # Matches Table
 matches.to_sql(
     'matches',
@@ -98,3 +97,5 @@ bowling.to_sql(
 
 print("bowling_stats table loaded")
 print("\n ALL DATA SUCCESSFULLY PUSHED TO MYSQL")
+
+
