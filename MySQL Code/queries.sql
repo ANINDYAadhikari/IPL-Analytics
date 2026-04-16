@@ -1,3 +1,4 @@
+CREATE DATABASE ipl_analytics;
 SHOW DATABASES;
 USE ipl_analytics;
 SHOW TABLES;
