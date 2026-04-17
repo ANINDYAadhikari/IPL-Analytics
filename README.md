@@ -123,10 +123,6 @@ The `.pbix` file is in the `Power BI/` folder. The dashboard has 3 pages:
 | Bowling | Top wicket takers, economy rates |
 
 
-**Slicers available:** Season, Team, and Player — so you can drill down into any specific combination.
-
-To open it: download the `.pbix` file → open in Power BI Desktop → connect to your local MySQL instance if needed, or use the embedded data.
-
 ---
 
 ## ▶️ How to Run the Python Code
