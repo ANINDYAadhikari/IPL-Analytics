@@ -114,14 +114,14 @@ FROM matches GROUP BY toss_decision;
 
 ## 📈 Power BI Dashboard
 
-The `.pbix` file is in the `Power BI/` folder. The dashboard has 4 pages:
+The `.pbix` file is in the `Power BI/` folder. The dashboard has 3 pages:
 
 | Page | What's on it |
 |------|-------------|
 | Overview | Total matches, total runs, wins by team |
 | Batting | Top run scorers, strike rates, season trends |
 | Bowling | Top wicket takers, economy rates |
-| Team Stats | Win/loss ratios, toss impact, season winners |
+
 
 **Slicers available:** Season, Team, and Player — so you can drill down into any specific combination.
 
@@ -181,7 +181,7 @@ python "Py Code/analysis.py"
 
 I'm a data analytics enthusiast who enjoys turning raw datasets into meaningful stories. This is my third portfolio project — previous ones include an E-Commerce Sales Analysis and a Suicide Rate Analysis. Always open to feedback and suggestions!
 
-Connect with me on [LinkedIn](https://www.linkedin.com/in/anindya-adhikari) | [GitHub](https://github.com/ANINDYAadhikari)
+Connect with me on [LinkedIn](https://www.linkedin.com/in/anindya-adhikari-55aa89239/) | [GitHub](https://github.com/ANINDYAadhikari)
 
 ---
 
