@@ -3,6 +3,7 @@ SHOW DATABASES;
 USE ipl_analytics;
 SHOW TABLES;
 
+
 -- Q1: Total Matches Played
 -- Find total number of matches in the dataset
 SELECT count(*) AS winner
