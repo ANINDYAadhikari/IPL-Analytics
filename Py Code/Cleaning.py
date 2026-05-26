@@ -12,8 +12,8 @@ import seaborn as sns
 plt.style.use('seaborn-v0_8')
 
 # Load Dataset
-matches = pd.read_csv(r"C:\Users\anind\OneDrive\Desktop\PythonVSC\Project\IPL-Analytics\Data\matches.csv", encoding='latin-1')
-deliveries = pd.read_csv(r"C:\Users\anind\OneDrive\Desktop\PythonVSC\Project\IPL-Analytics\Data\deliveries.csv", encoding='latin-1')
+matches = pd.read_csv(r"C:\Project\IPL-Analytics\Data\matches.csv", encoding='latin-1')
+deliveries = pd.read_csv(r"C:\Project\IPL-Analytics\Data\deliveries.csv", encoding='latin-1')
 print("Dataset Loaded Successfully!\n")
 
 
